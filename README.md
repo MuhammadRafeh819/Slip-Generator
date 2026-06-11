@@ -30,3 +30,6 @@ The **Enterprise Pay Slip Generator** is a sophisticated web application that al
 - Any modern web browser (Chrome, Firefox, Safari, Edge)
 - No server, database, or internet connection required (runs entirely client-side)
 - Google Fonts (Inter) will load if internet is available
+
+##Live Link
+https://slip-generator-62fc75.netlify.app/
