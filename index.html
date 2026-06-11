@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Pay Slip Generator</title>
+    <!-- Inter Font for modern, clean typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Input Section (Left) -->
+        <aside class="sidebar-section">
+            <div class="sidebar-header">
+                <div class="brand-logo">
+                    <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                    </svg>
+                    <span>HR Portal</span>
+                </div>
+                <h1>Pay Slip Generator</h1>
+                <p>Generate and print professional employee payslips in compliance with standard bonus tiers.</p>
+            </div>
+
+            <!-- Form Container -->
+            <div class="form-card">
+                <h2 class="section-title">Employee Details</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name">First Name</label>
+                        <input type="text" id="name" placeholder="John" required autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="last_name">Last Name</label>
+                        <input type="text" id="last_name" placeholder="Doe" required autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="department">Department</label>
+                        <select id="department" required>
+                            <option value="" disabled selected>Select Department</option>
+                            <option value="Engineering">Engineering</option>
+                            <option value="Sales & Marketing">Sales & Marketing</option>
+                            <option value="Finance & Accounts">Finance & Accounts</option>
+                            <option value="Human Resources">Human Resources</option>
+                            <option value="Operations & IT">Operations & IT</option>
+                            <option value="Design & Creative">Design & Creative</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="salary_month">Salary Month</label>
+                        <input type="month" id="salary_month">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="salary">Basic Salary (USD)</label>
+                    <div class="input-with-prefix">
+                        <span class="currency-symbol">$</span>
+                        <input type="number" id="salary" placeholder="55000" min="0" required autocomplete="off">
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="button-group">
+                    <button type="button" id="resetBtn" class="btn btn-secondary" style="width: 100%; flex: none;">
+                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+                        </svg>
+                        Reset Form
+                    </button>
+                </div>
+            </div>
+
+            <!-- Bonus Policy Reminder Info Box -->
+            <div class="policy-card">
+                <h3>
+                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    Bonus Policy Rules
+                </h3>
+                <ul class="policy-list">
+                    <li><span>$50,000 – $60,000</span> <span class="badge badge-info">10% Bonus</span></li>
+                    <li><span>$60,001 – $70,000</span> <span class="badge badge-info">15% Bonus</span></li>
+                    <li><span>$70,001 – $80,000</span> <span class="badge badge-info">20% Bonus</span></li>
+                    <li><span>$80,001 – $90,000</span> <span class="badge badge-info">25% Bonus</span></li>
+                    <li><span>$90,001 – $100,000</span> <span class="badge badge-info">30% Bonus</span></li>
+                    <li><span>Other Salaries</span> <span class="badge badge-neutral">No Bonus</span></li>
+                </ul>
+            </div>
+            <button id="generateBtn" class="btn btn-generate" style="width: 100%;">Generate Payslip</button>
+        </aside>
+
+        <!-- Preview Section (Right) -->
+        <main class="preview-section">
+            <div class="preview-controls">
+                <h2>Payslip Preview</h2>
+                <div class="control-actions">
+                    <button type="button" id="print" class="btn btn-print" disabled>
+                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                            <rect x="6" y="14" width="12" height="8"></rect>
+                        </svg>
+                        Print Payslip (A4)
+                    </button>
+                </div>
+            </div>
+
+            <div class="preview-container">
+                <!-- Empty State -->
+                <div id="emptyState" class="empty-state">
+                    <div class="empty-icon-wrapper">
+                        <svg viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                    </div>
+                    <h3>No Payslip Generated</h3>
+                    <p>Enter the employee details on the left panel. The printable A4 pay slip will be generated automatically as you type.</p>
+                </div>
+
+                <!-- Printable Pay Slip Sheet (A4 size) -->
+                <div id="payslipSheet" class="a4-sheet hidden">
+                    <!-- Payslip Header -->
+                    <header class="payslip-header">
+                        <div class="company-branding">
+                            <div class="company-logo">
+                                <svg viewBox="0 0 24 24" width="40" height="40" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                    <polyline points="2 17 12 22 22 17"></polyline>
+                                    <polyline points="2 12 12 17 22 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="company-text">
+                                <h2 class="company-name">APEX GLOBAL CORP</h2>
+                                <p class="company-tagline">Innovation & Excellence Delivered</p>
+                            </div>
+                        </div>
+                        <div class="document-meta">
+                            <h1 class="document-title">SALARY PAYSLIP</h1>
+                            <p class="payslip-period-label">For the month of: <span id="payslipPeriod" class="highlight-text">-</span></p>
+                        </div>
+                    </header>
+
+                    <hr class="divider">
+
+                    <!-- Employee Details Info Block -->
+                    <section class="payslip-details-grid">
+                        <div class="detail-item">
+                            <span class="detail-label">Employee Name:</span>
+                            <span id="fullName" class="detail-value">-</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Employee ID:</span>
+                            <span id="employeeId" class="detail-value">AG-94821</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Department:</span>
+                            <span id="depart" class="detail-value">-</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Pay Date:</span>
+                            <span id="payslipDate" class="detail-value">-</span>
+                        </div>
+                    </section>
+
+                    <!-- Earnings Table -->
+                    <table class="salary-table">
+                        <thead>
+                            <tr>
+                                <th>Earnings Component</th>
+                                <th class="text-right">Amount (USD)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <strong>Basic Salary</strong>
+                                    <p class="component-desc">Standard base compensation for contracted hours</p>
+                                </td>
+                                <td id="basicSalary" class="text-right salary-number">$0.00</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Bonus Pay</strong>
+                                    <p class="component-desc" id="bonusRateDesc">Calculated performance bonus rate</p>
+                                </td>
+                                <td id="bonus" class="text-right salary-number">$0.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Bonus Highlight Card -->
+                    <div id="bonusHighlightBox" class="bonus-highlight-box hidden">
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                        </svg>
+                        <span>Congratulations! A <strong id="bonusHighlightRate">0%</strong> performance tier bonus is included in this cycle.</span>
+                    </div>
+
+                    <!-- Total Salary Box -->
+                    <div class="total-salary-container">
+                        <div class="total-row">
+                            <span class="total-label">Net Pay / Total Salary</span>
+                            <span id="totalSalary" class="total-value">$0.00</span>
+                        </div>
+                    </div>
+
+                    <!-- Declarations and Signature -->
+                    <div class="payslip-signatures">
+                        <div class="signature-block">
+                            <div class="sig-line"></div>
+                            <span class="sig-label">Authorized Signatory</span>
+                        </div>
+                        <div class="signature-block">
+                            <div class="sig-line"></div>
+                            <span class="sig-label">Employee Signature</span>
+                        </div>
+                    </div>
+
+                    <!-- Payslip Footer Disclaimer -->
+                    <footer class="payslip-footer">
+                        <p>This is a system-generated document and does not require a physical signature unless mandated by department policies.</p>
+                        <p>© 2026 Apex Global Corp. All rights reserved.</p>
+                    </footer>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Script connection -->
+    <script src="app.js"></script>
+</body>
+</html>
