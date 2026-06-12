@@ -698,6 +698,92 @@ body {
 }
 
 /* ==========================================================================
+   RESPONSIVE PREVIEW ADJUSTMENTS (Mobile & Tablet Viewports)
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+    .preview-container {
+        padding: 1.5rem 0.75rem;
+    }
+
+    .a4-sheet {
+        padding: 2rem 1.25rem;
+    }
+
+    .payslip-details-grid {
+        gap: 1rem 1.5rem;
+        padding: 1rem;
+    }
+
+    .signature-block {
+        width: 45%;
+        max-width: 220px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .a4-sheet {
+        padding: 1.5rem 1rem;
+    }
+
+    .payslip-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1.25rem;
+    }
+
+    .document-meta {
+        text-align: center;
+    }
+
+    .payslip-details-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+        padding: 1rem;
+    }
+
+    .detail-item:nth-last-child(2) {
+        border-bottom: 1px dashed var(--neutral-200);
+        padding-bottom: 0.5rem;
+    }
+
+    .detail-item:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .salary-table th, 
+    .salary-table td {
+        padding: 0.85rem 0.6rem;
+    }
+
+    .salary-table td p.component-desc {
+        font-size: 0.7rem;
+    }
+
+    .payslip-signatures {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        padding-top: 2rem;
+    }
+
+    .signature-block {
+        width: 100%;
+        max-width: 260px;
+    }
+
+    .total-salary-container {
+        padding: 1.25rem 1rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .total-value {
+        font-size: 1.5rem;
+    }
+}
+
+/* ==========================================================================
    PRINT OPTIMIZATION (A4 Printable Target Styles)
    ========================================================================== */
 @media print {
