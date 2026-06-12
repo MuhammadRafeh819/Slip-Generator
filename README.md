@@ -32,4 +32,4 @@ The **Enterprise Pay Slip Generator** is a sophisticated web application that al
 - Google Fonts (Inter) will load if internet is available
 
 ##Live Link
-https://slip-generator-62fc75.netlify.app/
+https://slip-generator-519175.netlify.app/
